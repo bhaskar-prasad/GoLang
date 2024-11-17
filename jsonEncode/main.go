@@ -14,7 +14,9 @@ type course struct {
 
 func main() {
 	fmt.Println("Hello, World!")
-	JsonEncode()
+	// JsonEncode()
+	DecodeJson()
+
 }
 
 func JsonEncode() {
@@ -37,6 +39,26 @@ func JsonEncode() {
 	CheckNilError(err)
 	fmt.Printf("%s\n", jsonData)
 }
+
+func DecodeJson() {
+	jsonData := []byte(`
+		{
+		"coursename": "Go",
+		"grade": 90,
+		"tags": ["Go", "Golang"]
+		}
+	`)
+	var jsonCourse course
+	checkValid := json.Valid(jsonData)
+	if checkValid {
+		json.Unmarshal(jsonData, &jsonCourse)
+		fmt.Printf("%#v\n", jsonCourse)
+	} else {
+		fmt.Println("Invalid JSON")
+	}
+
+}
+
 func CheckNilError(err error) {
 	if err != nil {
 		panic(err)
